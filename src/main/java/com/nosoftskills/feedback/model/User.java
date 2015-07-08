@@ -2,6 +2,7 @@ package com.nosoftskills.feedback.model;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
@@ -82,25 +83,16 @@ public class User implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
-        if (version != user.version) return false;
-        if (!userName.equals(user.userName)) return false;
-        if (!password.equals(user.password)) return false;
-        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
-        return !(lastName != null ? !lastName.equals(user.lastName) : user.lastName != null);
-
+        return Objects.equals(userName, user.userName) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName);
     }
 
     @Override
     public int hashCode() {
-        int result = version;
-        result = 31 * result + userName.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        return result;
+        return Objects.hash(userName, password, firstName, lastName);
     }
 
     @Override
