@@ -9,14 +9,13 @@ public class Manager extends Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(updatable = false, nullable = false)
 	private Long id;
 
 	@Version
 	private int version;
 
 	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = false)
-	@Column(nullable = false)
 	private List<Employee> directReports = new ArrayList<>();
 
 	public Long getId() {

@@ -1,20 +1,19 @@
 package com.nosoftskills.feedback.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
 
 @Entity
+@NamedQueries(
+        @NamedQuery(name = "findAllCategories", query = "SELECT c FROM Category c"))
+@XmlRootElement
 public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private Long id;
 
     @Version
@@ -22,6 +21,13 @@ public class Category implements Serializable {
 
     @Column(nullable = false)
     private String name;
+
+    public Category() {
+    }
+
+    public Category(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return this.id;

@@ -10,7 +10,7 @@ public class Employee extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private Long id;
 
     @Version
@@ -20,7 +20,6 @@ public class Employee extends User {
     private Manager manager;
 
     @OneToMany(mappedBy = "forEmployee", cascade = CascadeType.ALL)
-    @Column(nullable = false)
     private List<FeedbackEvent> feedbacks = new ArrayList<>();
 
     public Long getId() {

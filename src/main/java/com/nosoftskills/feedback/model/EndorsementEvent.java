@@ -1,20 +1,15 @@
 package com.nosoftskills.feedback.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 import java.util.*;
-import javax.persistence.OneToMany;
+
 @Entity
 public class EndorsementEvent extends FeedbackEvent {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(updatable = false, nullable = false)
 	private Long id;
 
 	@Version
@@ -24,7 +19,6 @@ public class EndorsementEvent extends FeedbackEvent {
 	private int quantity = 50;
 
 	@OneToMany
-	@Column(nullable = false)
 	private List<Category> categories = new ArrayList<>();
 
 	public Long getId() {

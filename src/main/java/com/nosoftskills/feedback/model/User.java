@@ -11,16 +11,15 @@ import javax.persistence.Column;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "USERS")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private Long id;
 
     @Version
-    @Column(name = "version")
     private int version;
 
     private String userName;
