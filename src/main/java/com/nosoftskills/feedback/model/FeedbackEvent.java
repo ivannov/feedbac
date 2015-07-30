@@ -10,14 +10,14 @@ public class FeedbackEvent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private Long id;
 
     @Version
     private int version;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Employee forEmployee;
 
     @ManyToOne
