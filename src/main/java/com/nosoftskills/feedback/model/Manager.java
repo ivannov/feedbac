@@ -16,6 +16,7 @@ public class Manager extends Employee {
 	private int version;
 
 	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = false)
+	@JoinColumn(nullable = false)
 	private List<Employee> directReports = new ArrayList<>();
 
 	public Long getId() {
