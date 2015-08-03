@@ -25,6 +25,7 @@ public class TestDataInserter {
     public void init(@Observes @Initialized ServletContext context) throws IOException {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+        entityManager.persist(new Category("arquillian"));
         entityManager.persist(new Category("javaee"));
         entityManager.getTransaction().commit();
     }

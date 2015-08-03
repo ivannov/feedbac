@@ -19,7 +19,6 @@ public class EndorsementEvent extends FeedbackEvent {
 	private int quantity = 50;
 
 	@OneToMany
-	@JoinColumn(nullable = false)
 	private List<Category> categories = new ArrayList<>();
 
 	public Long getId() {

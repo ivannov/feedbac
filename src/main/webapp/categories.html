@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback categories</title>
+</head>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        renderCategories();
+    });
+
+    function renderCategories() {
+        $.get('rest/category', function (data) {
+            var categoriesTag = $('#categories');
+            categoriesTag.empty();
+            var categories = data.category;
+            if (categories.constructor === Array) {
+                for (var i = 0; i < categories.length; i++) {
+                    categoriesTag.append(categories[i].name + "<br>");
+                }
+            } else {
+                categoriesTag.append(categories.name);
+            }
+        });
+
+        $("#categoryName").focus();
+    }
+
+    function addCategory() {
+        var categoryName = $("#categoryName").val();
+        var newCategory = {
+            name: categoryName
+        };
+        $.ajax({
+            url: "rest/category",
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(newCategory)
+        }).success(function () {
+            renderCategories();
+        }).always(function () {
+            $("#categoryName").val('');
+        });
+    }
+</script>
+<body>
+<div id="categories"></div>
+<div id="addCategory">
+    <label for="categoryName">Category name:</label><input type="text" id="categoryName">
+    <button id="addCategoryBtn" onclick="addCategory()">Add</button>
+</div>
+</body>
+</html>
