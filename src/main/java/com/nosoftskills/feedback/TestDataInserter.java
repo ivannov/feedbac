@@ -1,6 +1,7 @@
 package com.nosoftskills.feedback;
 
 import com.nosoftskills.feedback.model.Category;
+import com.nosoftskills.feedback.user.UserContext;
 import org.apache.deltaspike.core.api.lifecycle.Initialized;
 import org.apache.deltaspike.jpa.api.entitymanager.PersistenceUnitName;
 
@@ -22,11 +23,15 @@ public class TestDataInserter {
     @PersistenceUnitName("feedback-persistence-unit")
     private EntityManagerFactory entityManagerFactory;
 
+    @Inject
+    private UserContext userContext;
+
     public void init(@Observes @Initialized ServletContext context) throws IOException {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(new Category("arquillian"));
         entityManager.persist(new Category("javaee"));
+        entityManager.persist(userContext.getLoggedEmployee());
         entityManager.getTransaction().commit();
     }
 

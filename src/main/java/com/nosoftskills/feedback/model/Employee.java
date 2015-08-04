@@ -22,6 +22,13 @@ public class Employee extends User {
     @OneToMany(mappedBy = "forEmployee", cascade = CascadeType.ALL)
     private List<FeedbackEvent> feedbacks = new ArrayList<>();
 
+    public Employee() {
+    }
+
+    public Employee(String userName, String password, String firstName, String lastName) {
+        super(userName, password, firstName, lastName);
+    }
+
     public Long getId() {
         return this.id;
     }
@@ -75,7 +82,6 @@ public class Employee extends User {
                 "userName='" + getUserName() + '\'' +
                 ", firstName='" + getFirstName() + '\'' +
                 ", lastName='" + getLastName() + '\'' +
-                ", manager=" + manager.getUserName() +
                 ", feedbacks=" + feedbacks +
                 '}';
     }

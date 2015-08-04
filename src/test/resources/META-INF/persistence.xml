@@ -6,6 +6,11 @@
         <description>Feedback Main Persistence Unit</description>
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>com.nosoftskills.feedback.model.Category</class>
+        <class>com.nosoftskills.feedback.model.Employee</class>
+        <class>com.nosoftskills.feedback.model.User</class>
+        <class>com.nosoftskills.feedback.model.Manager</class>
+        <class>com.nosoftskills.feedback.model.EndorsementEvent</class>
+        <class>com.nosoftskills.feedback.model.FeedbackEvent</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:testdb"/>

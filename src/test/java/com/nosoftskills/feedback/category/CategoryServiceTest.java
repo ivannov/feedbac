@@ -1,6 +1,8 @@
 package com.nosoftskills.feedback.category;
 
 import com.nosoftskills.feedback.model.Category;
+import com.nosoftskills.feedback.model.Employee;
+import com.nosoftskills.feedback.model.EndorsementEvent;
 import org.junit.*;
 
 import javax.persistence.EntityManager;
@@ -19,6 +21,8 @@ public class CategoryServiceTest {
 
     private static EntityManager entityManager;
     private static CategoryService categoryService;
+    private Employee employeeIvan;
+    private Employee employeePetio;
 
     @BeforeClass
     public static void setupTestObjects() {
@@ -37,11 +41,25 @@ public class CategoryServiceTest {
     private void insertTestData() {
         Category categoryJavaEE = new Category("javaee");
         Category categoryJQuery = new Category("jQuery");
-        Category categoryCdi = new Category("misc");
+        Category categoryCdi = new Category("cdi");
+
+        employeeIvan = new Employee("ivan", "ivan", "Ivan", "Ivanov");
+        employeePetio = new Employee("petio", "petio", "Petio", "Petev");
+
+        EndorsementEvent endorsementEvent1 = new EndorsementEvent(employeeIvan, categoryJavaEE);
+        EndorsementEvent endorsementEvent2 = new EndorsementEvent(employeeIvan, categoryCdi);
+        EndorsementEvent endorsementEvent3 = new EndorsementEvent(employeePetio, categoryJavaEE);
+        EndorsementEvent endorsementEvent4 = new EndorsementEvent(employeePetio, categoryJQuery);
 
         entityManager.persist(categoryJavaEE);
         entityManager.persist(categoryJQuery);
         entityManager.persist(categoryCdi);
+        entityManager.persist(employeeIvan);
+        entityManager.persist(employeePetio);
+        entityManager.persist(endorsementEvent1);
+        entityManager.persist(endorsementEvent2);
+        entityManager.persist(endorsementEvent3);
+        entityManager.persist(endorsementEvent4);
     }
 
     @Test
@@ -56,6 +74,12 @@ public class CategoryServiceTest {
         assertNotNull(persistedCategory.getId());
         assertNotNull(entityManager.find(Category.class, persistedCategory.getId()));
         assertThat(entityManager.createQuery("SELECT c FROM Category c", Category.class).getResultList().size(), is(4));
+    }
+
+    @Test
+    public void shouldFindAllCategoriesForUser() throws Exception {
+        List<Category> categoriesForIvan = categoryService.findCategoriesForUser(employeeIvan);
+        assertThat(categoriesForIvan.size(), is(2));
     }
 
     @After

@@ -5,6 +5,9 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@NamedQueries(
+        @NamedQuery(name = "findAllEndorsementsForEmployee", query = "SELECT e FROM EndorsementEvent e WHERE e.forEmployee = :endorsedEmployee")
+)
 public class EndorsementEvent extends FeedbackEvent {
 
 	@Id
@@ -18,10 +21,18 @@ public class EndorsementEvent extends FeedbackEvent {
 	@Column(nullable = false)
 	private int quantity = 50;
 
-	@OneToMany
-	private List<Category> categories = new ArrayList<>();
+	@ManyToOne
+	private Category category;
 
-	public Long getId() {
+    public EndorsementEvent() {
+    }
+
+    public EndorsementEvent(Employee forEmployee, Category category) {
+        super(forEmployee);
+        this.category = category;
+    }
+
+    public Long getId() {
 		return this.id;
 	}
 
@@ -45,12 +56,12 @@ public class EndorsementEvent extends FeedbackEvent {
 		this.quantity = quantity;
 	}
 
-	public List<Category> getCategories() {
-		return this.categories;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setCategories(final List<Category> category) {
-		this.categories = category;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override
@@ -60,12 +71,12 @@ public class EndorsementEvent extends FeedbackEvent {
 		if (!super.equals(o)) return false;
 		EndorsementEvent that = (EndorsementEvent) o;
 		return Objects.equals(quantity, that.quantity) &&
-				Objects.equals(categories, that.categories);
+				Objects.equals(category, that.category);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), quantity, categories);
+		return Objects.hash(super.hashCode(), quantity, category);
 	}
 
 	@Override
@@ -77,7 +88,7 @@ public class EndorsementEvent extends FeedbackEvent {
 				", selfComment='" + getSelfComment() + '\'' +
 				", createdAt=" + getCreatedAt() +
 				", quantity=" + quantity +
-				", categories=" + categories +
+				", category=" + category +
 				'}';
 	}
 }

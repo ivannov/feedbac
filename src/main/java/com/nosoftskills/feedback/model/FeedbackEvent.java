@@ -31,7 +31,14 @@ public class FeedbackEvent implements Serializable {
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private Date createdAt = new Date();
+
+    public FeedbackEvent() {
+    }
+
+    public FeedbackEvent(Employee forEmployee) {
+        this.forEmployee = forEmployee;
+    }
 
     public Long getId() {
         return this.id;
